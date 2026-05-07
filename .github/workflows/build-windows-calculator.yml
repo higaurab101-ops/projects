@@ -24,11 +24,7 @@ jobs:
 
     - name: Build EXE
       run: |
-        pyinstaller --onedir --windowed ^
-        --icon=snake/device.ico ^
-        --add-data "calculator/*.png;." ^
-        --add-data "calculator/calculate.p;." ^
-        snake/main.py
+        pyinstaller --onedir --windowed --icon=calculator/device.ico --add-data "*.png:." calculator/calculator.py
 
     - name: Zip Windows build
       run: |
