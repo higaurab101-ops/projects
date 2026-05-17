@@ -1,4 +1,4 @@
-name: Build Windows EXE
+name: windows_calculator
 
 on:
   push:
@@ -28,4 +28,10 @@ jobs:
 
     - name: Zip Windows build
       run: |
-        powershell Compress-Archive -Path dist/calculate -
+        powershell Compress-Archive -Path dist/calculate -DestinationPath dist/Calculator_${{ github.ref_name }}.zip
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: calculator-windows
+        path: dist/Calculator_${{ github.ref_name }}.zip
