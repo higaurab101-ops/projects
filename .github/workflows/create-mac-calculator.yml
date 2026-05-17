@@ -1,4 +1,4 @@
-name: Build Mac App
+name: windows_calculator_mac
 
 on:
   push:
@@ -10,7 +10,8 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout repo
+      uses: actions/checkout@v3
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -23,15 +24,20 @@ jobs:
 
     - name: Build Mac App
       run: |
-        pyinstaller --onedir --windowed --icon=calculator/device.icns --add-data "*.png:." calculator/calculate.py
+        pyinstaller \
+        --onedir \
+        --windowed \
+        --icon=calculator/device.icns \
+        --add-data "calculator/*.png:." \
+        calculator/calculate.py
 
     - name: Zip Mac build
       run: |
         cd dist
-        zip -r Calculator_Mac_v1.zip calculator
+        zip -r Calculator_Mac_${{ github.ref_name }}.zip calculate.app
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: calculator-mac
-        path: dist/Calculator_Mac_v1.zip
+        path: dist/Calculator_Mac_${{ github.ref_name }}.zip
